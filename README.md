@@ -4,17 +4,37 @@ Prototype du site de Courir Fonsegrives, club de course à pied de Quint-Fonsegr
 
 En ligne : https://ekans.github.io/courir-prototype/
 
-## Contenu
+## Modifier le contenu
 
-- Une seule page, `index.html`.
-- `photos/` : les photos servies avec le site (pour l'instant, le trombinoscope).
-- Les autres images et le PDF sont chargés depuis [courir-fonsegrives.fr](https://courir-fonsegrives.fr).
+Le contenu se modifie avec [Sveltia CMS](https://sveltiacms.app), à l'adresse https://ekans.github.io/courir-prototype/admin/.
+
+Pour se connecter, il faut un compte GitHub avec le droit d'écriture sur ce dépôt.
+Sur l'écran d'accueil, choisir « Sign In Using Access Token » et suivre le lien qui crée le jeton sur GitHub.
+
+Chaque enregistrement fait un commit sur `main`, et le site se met à jour environ une minute plus tard.
+
+## Organisation
+
+- `index.html` : la mise en page. Le texte vient des fichiers de `_data/`.
+- `_data/` : un fichier YAML par rubrique de la page (accueil, présentation, lieux, parcours, semaine, Balade, adhésion, bureau).
+- `admin/` : Sveltia CMS. `config.yml` décrit les champs modifiables de chaque rubrique.
+- `photos/` : les images servies avec le site.
+- `documents/` : le bulletin d'adhésion.
+
+Un parcours indique les lieux qu'il traverse. Le mur des lieux et la liste des parcours de chaque lieu en sont déduits dans le navigateur.
 
 ## Voir en local
 
-Ouvrir `index.html` dans un navigateur.
+GitHub Pages construit le site avec Jekyll.
+Pour le voir en local, avec Ruby et Jekyll installés :
+
+```sh
+jekyll serve
+```
+
+Puis ouvrir http://localhost:4000/courir-prototype/.
 
 ## Publier
 
-GitHub Pages sert la racine de `main`.
+GitHub Pages construit et sert la racine de `main`.
 Chaque push sur `main` relance la publication (environ une minute).
