@@ -6,8 +6,9 @@ En ligne : https://ekans.github.io/courir-prototype/
 
 ## Contenu
 
-- Une seule page, `index.html`, sans fichier local à côté.
-- Images et PDF chargés depuis [courir-fonsegrives.fr](https://courir-fonsegrives.fr).
+- Une seule page, `index.html`.
+- `photos/` : les photos servies avec le site (pour l'instant, le trombinoscope).
+- Les autres images et le PDF sont chargés depuis [courir-fonsegrives.fr](https://courir-fonsegrives.fr).
 
 ## Voir en local
 
