@@ -1,0 +1,9 @@
+collections:
+  rubriques:
+    output: false
+
+kramdown:
+  auto_ids: false
+  smart_quotes: apos,apos,quot,quot
+
+strict_front_matter: true
