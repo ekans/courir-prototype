@@ -261,15 +261,8 @@ footer{padding:1.25rem max(var(--m),calc(50% - 36rem)) 2.25rem;font-size:.9rem;d
     [21,"Une boucle plutôt champêtre. La Saune, Lauzerville, Auzielle, Saint-Orens, Catala, la Saune.",3095112]
   ];
   var P=[["La Saune",[0,1,2,3,5,7,13]],["Lauzerville",[4,5,13]],["Garabet",[8]],["Rebeillou",[8]],["Roquette",[9]],["Grand Port de Mer",[1]],["Saint-Orens",[0,13]],["Flourens",[8]],["Balma",[6,10]],["Lasbordes",[3]],["Les Arnis",[3]],["Mons",[12]],["Labège",[2]],["Les Argoulets",[10]],["Auzielle",[13]],["Catala",[13]],["Ferme des 50",[11]],["Castanet",[11]]];
-  var wall=document.getElementById("wall"),list=document.getElementById("list"),place=document.getElementById("place"),count=document.getElementById("count"),lasso=document.getElementById("lasso"),btns=[],cur=0;
-  function ring(){
-    if(!lasso)return;
-    var b=btns[cur],px=9,py=1;
-    lasso.style.transform="translate("+(b.offsetLeft-px)+"px,"+(b.offsetTop-py)+"px) scale("+(b.offsetWidth+2*px)/100+","+(b.offsetHeight+2*py)/100+")";
-    lasso.style.visibility="visible";
-  }
+  var wall=document.getElementById("wall"),list=document.getElementById("list"),place=document.getElementById("place"),count=document.getElementById("count"),btns=[];
   function pick(i){
-    cur=i;
     btns.forEach(function(b,j){b.setAttribute("aria-pressed",j===i?"true":"false");});
     place.textContent=P[i][0];
     var n=P[i][1].length;
@@ -277,7 +270,6 @@ footer{padding:1.25rem max(var(--m),calc(50% - 36rem)) 2.25rem;font-size:.9rem;d
     list.innerHTML=P[i][1].map(function(r){
       return "<li><b>"+R[r][0]+" km</b><span>"+R[r][1]+'</span><a href="http://www.openrunner.com/index.php?id='+R[r][2]+'">Voir le plan<span class="sr"> du parcours de '+R[r][0]+" km</span></a></li>";
     }).join("");
-    ring();
   }
   P.forEach(function(p,i){
     var b=document.createElement("button");b.type="button";b.textContent=p[0];
@@ -285,11 +277,6 @@ footer{padding:1.25rem max(var(--m),calc(50% - 36rem)) 2.25rem;font-size:.9rem;d
     wall.appendChild(b);btns.push(b);
   });
   pick(0);
-  if(lasso){
-    addEventListener("resize",ring);
-    if(document.fonts&&document.fonts.ready)document.fonts.ready.then(ring);
-    requestAnimationFrame(function(){requestAnimationFrame(function(){lasso.classList.add("go");});});
-  }
 })();
 </script>
 </body>
