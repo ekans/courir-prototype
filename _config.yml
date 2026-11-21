@@ -1,0 +1,5 @@
+baseurl: /courir-prototype
+exclude:
+  - README.md
+kramdown:
+  smart_quotes: apos,apos,quot,quot

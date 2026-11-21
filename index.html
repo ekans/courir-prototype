@@ -1,3 +1,5 @@
+---
+---
 <!doctype html>
 <html lang="fr">
 <head>
@@ -148,6 +150,13 @@ footer{padding:1.25rem max(var(--m),calc(50% - 36rem)) 2.25rem;font-size:.9rem;d
 </style>
 </head>
 <body>
+{%- assign accueil = site.data.accueil -%}
+{%- assign presentation = site.data.presentation -%}
+{%- assign lieux = site.data.lieux -%}
+{%- assign semaine = site.data.semaine -%}
+{%- assign balade = site.data.balade -%}
+{%- assign adhesion = site.data.adhesion -%}
+{%- assign bureau = site.data.bureau %}
 <a class="skip" href="#contenu">Aller au contenu</a>
 <header class="top">
   <a class="wm" href="#contenu" aria-label="Courir Fonsegrives, haut de page">Cour<i>i</i>r Fonsegr<i>i</i>ves</a>
@@ -155,112 +164,101 @@ footer{padding:1.25rem max(var(--m),calc(50% - 36rem)) 2.25rem;font-size:.9rem;d
 </header>
 <main id="contenu" tabindex="-1">
 <div class="hero">
-  <img class="ph" src="https://courir-fonsegrives.fr/images/Jmimi/fond3.jpg" width="1200" height="800" alt="Des coureurs sur l'herbe, à l'automne, vus à hauteur de jambes." fetchpriority="high">
+  <img class="ph" src="{{ accueil.photo | relative_url }}" width="1200" height="800" alt="{{ accueil.photo_alt }}" fetchpriority="high">
   <div class="cap">
-    <h1>Le samedi matin, quelque part entre la Saune et Lauzerville</h1>
-    <p class="lede">Courir Fonsegrives est le club de course à pied de Quint-Fonsegrives. Trois sorties par semaine, au départ de la salle Patrick Pépi.</p>
-    <a class="btn" href="mailto:courirfonsegrives31@gmail.com?subject=S%C3%A9ance%20d%27essai">Venir courir samedi, 9&nbsp;h</a>
+    <h1>{{ accueil.titre }}</h1>
+    <p class="lede">{{ accueil.chapo }}</p>
+    <a class="btn" href="mailto:{{ bureau.email }}?subject=S%C3%A9ance%20d%27essai">{{ accueil.bouton }}</a>
   </div>
 </div>
 
 <section class="w about"><div class="in">
-  <h2>Course à pied, plaisir et convivialité sont plus que compatibles.</h2>
+  <h2>{{ presentation.titre }}</h2>
   <div>
-    <p class="txt">Courir Fonsegrives est l'association de course à pied hors stade de Quint-Fonsegrives. N'allez pas croire que vous ne courez pas assez vite ou pas assez longtemps pour nous rejoindre. Un entraînement d'essai vous montrera qu'il n'y a pas que des furieux de la compétition ici (il y en a aussi&nbsp;!).</p>
-    <p class="txt">Le club participe à des courses locales, nationales et internationales, et garde à son calendrier des moments très conviviaux et assez peu sportifs (il faut l'avouer), où conjoints et enfants sont les bienvenus.</p>
+    {%- for p in presentation.paragraphes %}
+    <p class="txt">{{ p }}</p>
+    {%- endfor %}
   </div>
 </div></section>
 
 <section class="b dos" id="lieux"><div class="in">
-  <h2>Les lieux où l'on court</h2>
-  <p class="txt">Nos quatorze parcours passent par ces lieux. Choisissez-en un pour voir les parcours qui le traversent. Tous partent de la salle Patrick Pépi.</p>
+  <h2>{{ lieux.titre }}</h2>
+  <p class="txt">{{ lieux.intro }}</p>
   <div class="wall" id="wall" role="group" aria-label="Lieux traversés par nos parcours"></div>
   <div class="panel" aria-live="polite">
-    <div><h3 class="pl" id="place">La Saune</h3><p id="count"></p></div>
+    <div><h3 class="pl" id="place">{{ lieux.lieux | first }}</h3><p id="count"></p></div>
     <ul id="list"></ul>
   </div>
-  <noscript><p class="txt">Les quatorze parcours du club, de 4 à 21&nbsp;km, sont sur OpenRunner sous le nom «&nbsp;CourirFonsegrives&nbsp;».</p></noscript>
+  <noscript><p class="txt">{{ lieux.sans_js }}</p></noscript>
 </div></section>
 
 <section class="w week" id="semaine"><div class="in">
-  <h2>Trois sorties par semaine</h2>
+  <h2>{{ semaine.titre }}</h2>
   <ul class="times">
-    <li><h3>Samedi, 9&nbsp;h</h3><p class="txt">Sortie en groupe. Départ du complexe Patrick Pépi, rendez-vous un peu avant 9&nbsp;h devant la salle. Le bon jour pour une séance d'essai.</p></li>
-    <li><h3>Dimanche, 10&nbsp;h</h3><p class="txt">Sortie en groupe. Même lieu, pour ceux qui ne sont pas disponibles le samedi.</p></li>
-    <li><h3>Mercredi, 18&nbsp;h&nbsp;30</h3><p class="txt">Fractionné. Sur les chemins, dans les rues en pente de Fonsegrives ou sur la piste du collège, avec Sacha, notre coach. Demandez à intégrer le groupe WhatsApp.</p></li>
+    {%- for s in semaine.sorties %}
+    <li><h3>{{ s.quand }}</h3><p class="txt">{{ s.texte }}</p></li>
+    {%- endfor %}
   </ul>
-  
 </div></section>
 
 <section class="y balade" id="balade"><div class="in">
-  <a href="http://www.baladedelasaune.fr"><img src="https://courir-fonsegrives.fr/images/2026/affiche-balade-2026.jpg" width="1241" height="1755" alt="Affiche de la Balade de la Saune 2026." loading="lazy"></a>
+  <a href="{{ balade.site }}"><img src="{{ balade.affiche | relative_url }}" width="1241" height="1755" alt="{{ balade.affiche_alt }}" loading="lazy"></a>
   <div>
-    <h2>La Balade de la Saune</h2>
-    <p class="d">Édition 2026, le dimanche 11 octobre</p>
-    <p class="txt">Un 10&nbsp;km, un 5&nbsp;km, une marche et une course enfant. Toujours organisée par Courir Fonsegrives, et toujours au profit des Restos Bébé. Renseignements et inscriptions sur le site de la course.</p>
-    <a class="btn" href="http://www.baladedelasaune.fr">Aller sur baladedelasaune.fr</a>
+    <h2>{{ balade.titre }}</h2>
+    <p class="d">{{ balade.date }}</p>
+    <p class="txt">{{ balade.texte }}</p>
+    <a class="btn" href="{{ balade.site }}">{{ balade.bouton }}</a>
   </div>
 </div></section>
 
 <section class="w join" id="adhesion"><div class="in">
-  <h2>Enfiler le maillot</h2>
+  <h2>{{ adhesion.titre }}</h2>
   <div class="g">
     <table class="prices">
       <caption class="sr">Tarifs de l'adhésion pour une saison</caption>
       <tbody>
-        <tr><th scope="row">Résident de Fonsegrives</th><td>30&nbsp;€</td></tr>
-        <tr><th scope="row">Couple de résidents</th><td>55&nbsp;€</td></tr>
-        <tr><th scope="row">Hors commune</th><td>33&nbsp;€</td></tr>
-        <tr><th scope="row">Couple hors commune</th><td>62&nbsp;€</td></tr>
-        <tr><th scope="row">La tenue, tee-shirt ou débardeur, à la première inscription</th><td>10&nbsp;€</td></tr>
+        {%- for t in adhesion.tarifs %}
+        <tr><th scope="row">{{ t.libelle }}</th><td>{{ t.prix }}&nbsp;€</td></tr>
+        {%- endfor %}
       </tbody>
     </table>
     <div>
-      <p class="txt">L'adhésion vaut pour la saison, du 1<sup>er</sup> septembre au 31 août. Vous pouvez vous inscrire à tout moment de l'année, et venir d'abord essayer un samedi matin.</p>
+      <p class="txt">{{ adhesion.texte }}</p>
       <h3>Pour adhérer</h3>
       <ol class="steps">
-        <li>Le <a href="https://courir-fonsegrives.fr/images/Bulletin_dadh%C3%A9sion_2026-2027.pdf">bulletin d'adhésion 2026-2027</a> (PDF).</li>
-        <li>Un chèque ou un virement bancaire du bon montant.</li>
-        <li>Une photo pour le <a href="photos/trombinoscope-2026-2027.jpg">trombinoscope</a>.</li>
-        <li>Le tout à un membre du bureau, de préférence à Ludivine Querbes, 11 place de la Saune à Fonsegrives.</li>
+        <li>Le <a href="{{ adhesion.bulletin | relative_url }}">bulletin d'adhésion {{ adhesion.saison }}</a> (PDF).</li>
+        <li>{{ adhesion.paiement }}</li>
+        <li>Une photo pour le <a href="{{ adhesion.trombinoscope | relative_url }}">trombinoscope</a>.</li>
+        <li>{{ adhesion.remise }}</li>
       </ol>
     </div>
   </div>
 </div></section>
 
 <section class="b board" id="bureau"><div class="in">
-  <h2>Le bureau</h2>
+  <h2>{{ bureau.titre }}</h2>
   <ul class="people">
-    <li><b>Ludivine Querbes</b><span>Présidente</span><a href="tel:+33632510183">06 32 51 01 83</a></li>
-    <li><b>Jacques Oubrier</b><span>Vice-président, association</span></li>
-    <li><b>Sacha Foucher</b><span>Vice-président, Balade</span></li>
-    <li><b>Hélène Voirin</b><span>Trésorière</span></li>
-    <li><b>Fanny Yessad</b><span>Secrétaire</span></li>
+    {%- for m in bureau.membres %}
+    <li><b>{{ m.nom }}</b><span>{{ m.role }}</span>
+      {%- if m.telephone -%}
+      {%- assign chiffres = m.telephone | remove: " " | remove: " " | remove: "." -%}
+      <a href="tel:+33{{ chiffres | slice: 1, 9 }}">{{ m.telephone }}</a>
+      {%- endif -%}
+    </li>
+    {%- endfor %}
   </ul>
-  <a class="mail" href="mailto:courirfonsegrives31@gmail.com">courirfonsegrives31@gmail.com</a>
-  <p class="txt">Le club est aussi sur <a href="https://strava.app.link/qBerZEvmSVb">Strava</a>. Le magasin R&nbsp;Running, partenaire du club, propose à nos adhérents des remises permanentes (hors soldes) sur les chaussures et le grand textile.</p>
+  <a class="mail" href="mailto:{{ bureau.email }}">{{ bureau.email }}</a>
+  <p class="txt">{{ bureau.texte | markdownify | remove: "<p>" | remove: "</p>" | strip }}</p>
 </div></section>
 </main>
-<footer><span>© 2026 Courir Fonsegrives, section de l'USQF</span><span>Quint-Fonsegrives, Haute-Garonne</span></footer>
+<footer>{% for ligne in accueil.pied %}<span>{{ ligne }}</span>{% endfor %}</footer>
+
 <script>
 (function(){
-  var R=[
-    [4,"Petit aller-retour plat par la Saune jusqu'au pont de la route de Saint-Orens. Pour les débutants, les pressés, les blessés…",3098041],
-    [5,"Petit tour dans les quartiers de Quint-Fonsegrives par ses cours d'eau, avec quelques rampaillous sympathiques.",3098519],
-    [5,"Petit aller-retour plat par la Saune jusqu'à la route de Labège.",3098071],
-    [8,"Très local mais champêtre, par la Saune, les arrières de l'aérodrome de Lasbordes, et retour par les Arnis.",3109729],
-    [10,"Le on ne peut plus classique aller-retour au tennis de Lauzerville.",3095165],
-    [11,"Le tennis de Lauzerville, mais en boucle. L'aller se fait le long de la Saune.",3094866],
-    [11,"Pour les soirées d'hiver où il fait nuit. Fonsegrives, stade de Balma et retour.",3097173],
-    [11,"Le parcours de la Balade de la Saune au départ de Pépi, donc un peu plus long que l'original.",3108866],
-    [12,"Un parcours pour les amateurs de côtes, par Garabet, Flourens et Rebeillou.",3095256],
-    [14,"Le très classique aller-retour à Roquette, avec (ou pas) la montée de la côte.",3095199],
-    [15,"Quint-Fonsegrives puis Balma, retour par les Argoulets et la route de Castres. Quelques côtes.",3097985],
-    [16,"Les jours de pique-nique à la ferme des 50. Aller simple, poussé jusqu'à l'écluse de Castanet.",3098513],
-    [20,"Un petit 20 bornes qui monte et qui descend, passage par Mons oblige. À faire en groupe.",3111096],
-    [21,"Une boucle plutôt champêtre. La Saune, Lauzerville, Auzielle, Saint-Orens, Catala, la Saune.",3095112]
-  ];
-  var P=[["La Saune",[0,1,2,3,5,7,13]],["Lauzerville",[4,5,13]],["Garabet",[8]],["Rebeillou",[8]],["Roquette",[9]],["Grand Port de Mer",[1]],["Saint-Orens",[0,13]],["Flourens",[8]],["Balma",[6,10]],["Lasbordes",[3]],["Les Arnis",[3]],["Mons",[12]],["Labège",[2]],["Les Argoulets",[10]],["Auzielle",[13]],["Catala",[13]],["Ferme des 50",[11]],["Castanet",[11]]];
+  var R={{ site.data.parcours.parcours | jsonify }};
+  var P={{ site.data.lieux.lieux | jsonify }}.map(function(nom){
+    return [nom,R.reduce(function(ids,r,i){if(r.lieux.indexOf(nom)>=0)ids.push(i);return ids;},[])];
+  });
   var wall=document.getElementById("wall"),list=document.getElementById("list"),place=document.getElementById("place"),count=document.getElementById("count"),lasso=document.getElementById("lasso"),btns=[],cur=0;
   function ring(){
     if(!lasso)return;
@@ -275,7 +273,7 @@ footer{padding:1.25rem max(var(--m),calc(50% - 36rem)) 2.25rem;font-size:.9rem;d
     var n=P[i][1].length;
     count.textContent=n===1?"Un parcours y passe.":n+" parcours y passent.";
     list.innerHTML=P[i][1].map(function(r){
-      return "<li><b>"+R[r][0]+" km</b><span>"+R[r][1]+'</span><a href="http://www.openrunner.com/index.php?id='+R[r][2]+'">Voir le plan<span class="sr"> du parcours de '+R[r][0]+" km</span></a></li>";
+      return "<li><b>"+R[r].km+" km</b><span>"+R[r].description+'</span><a href="http://www.openrunner.com/index.php?id='+R[r].openrunner+'">Voir le plan<span class="sr"> du parcours de '+R[r].km+" km</span></a></li>";
     }).join("");
     ring();
   }
