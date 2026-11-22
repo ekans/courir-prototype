@@ -42,7 +42,7 @@ Corriger le nom d'un membre du trombinoscope : changer `prenom:` ou `nom:` dans 
 
 Changer la photo d'un membre du trombinoscope : déposer la nouvelle photo dans `photos/membres/` sous le même nom que l'ancienne, elle la remplace. Sur la page, la photo est recadrée en carré, centrée un peu au-dessus du milieu. Une photo de téléphone est lourde : la réduire à environ 400 pixels de large avant de la déposer garde la page rapide.
 
-Ajouter un partenaire : copier un bloc qui commence par `- nom:` dans `partenaires.md` et changer ses valeurs. `logo_largeur` et `logo_hauteur` sont la taille de l'image en pixels. Sans ligne `site:`, le partenaire s'affiche sans lien.
+Ajouter un partenaire : copier un bloc qui commence par `- nom:` dans `partenaires.md` et changer ses valeurs. `logo_largeur` et `logo_hauteur` sont la taille de l'image en pixels. Sans ligne `site:`, le partenaire s'affiche sans lien. Sous `reseaux:`, chaque bloc `- nom:` ajoute un lien vers un réseau social. Instagram, Facebook, Telegram et Twitter ont leur icône.
 
 Ajouter un parcours : copier un bloc qui commence par `- km:` dans `lieux.md` et changer ses valeurs. Le nombre après `openrunner:` est le numéro du parcours sur OpenRunner. Un lieu cité dans `passe_par` mais absent de la liste `lieux` s'ajoute tout seul à la fin.
 
