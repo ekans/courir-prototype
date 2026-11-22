@@ -17,6 +17,7 @@ Chaque rubrique du site a son fichier dans [`_rubriques/`](_rubriques) :
 | `balade.md` | La Balade de la Saune |
 | `adhesion.md` | Les tarifs et comment adhérer |
 | `bureau.md` | Les membres du bureau, leurs photos, l'adresse mail du club |
+| `membres.md` | Le trombinoscope : la liste des membres et leurs photos |
 | `partenaires.md` | Les partenaires du club, leur logo et leur site |
 
 Pour modifier un texte sur GitHub :
@@ -33,6 +34,14 @@ Un fichier a deux parties :
 
 Changer la photo d'un membre du bureau : déposer la photo dans `photos/bureau/` (bouton « Add file », puis « Upload files »), puis mettre son chemin après `photo:` dans `bureau.md`. Sans ligne `photo:`, le membre s'affiche sans photo.
 
+Ajouter un membre au trombinoscope : copier un bloc qui commence par `- prenom:` dans `membres.md`, le coller à sa place dans l'ordre alphabétique des noms, et changer ses valeurs. Déposer sa photo dans `photos/membres/` (bouton « Add file », puis « Upload files »), puis mettre son chemin après `photo:`. Sans ligne `photo:`, le membre s'affiche avec ses initiales et n'est pas dans le jeu « Qui est-ce ? ».
+
+Retirer un membre du trombinoscope : supprimer son bloc dans `membres.md`, puis sa photo dans `photos/membres/`.
+
+Corriger le nom d'un membre du trombinoscope : changer `prenom:` ou `nom:` dans son bloc de `membres.md`.
+
+Changer la photo d'un membre du trombinoscope : déposer la nouvelle photo dans `photos/membres/` sous le même nom que l'ancienne, elle la remplace. Sur la page, la photo est recadrée en carré, centrée un peu au-dessus du milieu. Une photo de téléphone est lourde : la réduire à environ 400 pixels de large avant de la déposer garde la page rapide.
+
 Ajouter un partenaire : copier un bloc qui commence par `- nom:` dans `partenaires.md` et changer ses valeurs. `logo_largeur` et `logo_hauteur` sont la taille de l'image en pixels. Sans ligne `site:`, le partenaire s'affiche sans lien.
 
 Ajouter un parcours : copier un bloc qui commence par `- km:` dans `lieux.md` et changer ses valeurs. Le nombre après `openrunner:` est le numéro du parcours sur OpenRunner. Un lieu cité dans `passe_par` mais absent de la liste `lieux` s'ajoute tout seul à la fin.
@@ -44,7 +53,7 @@ Si le haut d'un fichier contient une erreur, le site n'est pas mis à jour et la
 - `index.html` : la mise en page, les couleurs et le code de la page. Il assemble les rubriques, dans l'ordre de la page.
 - `_config.yml` : les réglages de Jekyll, qui fabrique le site.
 - `.github/workflows/` : les deux publications automatiques, celle du site et celle des aperçus de PR.
-- `photos/` : les photos servies avec le site : le trombinoscope, et dans `photos/bureau/` celles des membres du bureau.
+- `photos/` : les photos servies avec le site : dans `photos/bureau/` celles des membres du bureau, dans `photos/membres/` celles du trombinoscope.
 - Les autres images et le PDF sont chargés depuis [courir-fonsegrives.fr](https://courir-fonsegrives.fr).
 
 ## Voir en local

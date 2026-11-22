@@ -43,7 +43,7 @@ section{padding:clamp(3.5rem,8vw,6.5rem) var(--m)}
 .txt{max-width:33em}
 .txt>p+p{margin-top:1rem}
 
-/* Contextes de couleur. L'ordre compte : .b et .y passent après .w. */
+/* Contextes de couleur. L'ordre compte : .b, .y et .n passent après .w. */
 .w{background:#fff;color:var(--ink)}
 .w h1,.w h2,.w h3{color:var(--blue)}
 .w :focus-visible{outline-color:var(--navy)}
@@ -53,6 +53,9 @@ section{padding:clamp(3.5rem,8vw,6.5rem) var(--m)}
 .y{background:var(--yellow);color:var(--navy)}
 .y h2,.y h3{color:var(--navy)}
 .y :focus-visible{outline-color:var(--navy)}
+.n{background:var(--navy);color:#fff}
+.n h2,.n h3{color:#fff}
+.n :focus-visible{outline-color:var(--yellow)}
 
 .top{position:sticky;top:0;z-index:5;background:var(--blue);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:0 1.5rem;padding:.75rem max(var(--m),calc(50% - 36rem))}
 .wm{font-family:var(--display);font-weight:700;font-size:2rem;line-height:1;text-transform:uppercase;letter-spacing:.04em;text-decoration:none;padding:.4rem 0}
@@ -121,6 +124,36 @@ section{padding:clamp(3.5rem,8vw,6.5rem) var(--m)}
 .mail{display:inline-block;margin:3rem 0 1rem;font-family:var(--display);font-weight:700;font-size:clamp(2.1rem,6vw,4.75rem);line-height:1;letter-spacing:.03em;color:var(--yellow);overflow-wrap:anywhere}
 .w .mail{color:var(--blue)}
 
+/* Les membres : l'album de Polaroïds */
+.polas{list-style:none;padding:0;margin-top:2.5rem;display:grid;grid-template-columns:repeat(auto-fill,minmax(10rem,1fr));gap:2.25rem 1.5rem}
+.polas li{position:relative;--r:-1.6deg;transform:rotate(var(--r));transition:transform .3s var(--ease)}
+.polas li:nth-child(3n+2){--r:2deg}
+.polas li:nth-child(5n+3){--r:-2.8deg}
+.polas li:nth-child(4n){--r:1.2deg}
+.polas li:nth-child(7n+6){--r:3deg}
+.polas li:hover,.polas li:focus-within{transform:scale(1.05);z-index:2}
+.polas li:nth-child(3n+1)::before,.polas li:nth-child(8n+6)::before{content:"";position:absolute;z-index:1;top:-.7rem;left:50%;width:4rem;height:1.3rem;margin-left:-2rem;background:rgba(255,212,0,.8);transform:rotate(-4deg)}
+.pola{background:#fff;color:var(--navy);padding:.55rem .55rem 0;box-shadow:0 .5rem 1.2rem rgba(0,0,0,.4)}
+.pola img,.ini{display:block;width:100%;height:auto;aspect-ratio:1;object-fit:cover;object-position:50% 30%;background:var(--soft)}
+.ini{display:grid;place-content:center;font-family:var(--display);font-weight:700;font-size:3.5rem;color:var(--blue)}
+.pola p,.pola::after{font-family:var(--display);font-weight:700;font-size:1.75rem;line-height:1;text-align:center;padding:.5rem 0 .6rem;overflow-wrap:anywhere}
+.pola .nom{display:none}
+
+/* Le jeu « Qui est-ce ? » : tout découle de data-mode sur la section et d'aria-pressed sur chaque carte. */
+.tete{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:0 1.5rem}
+.jouer{font:600 .95rem/1.2 var(--body);color:#fff;background:transparent;border:2px solid var(--line);border-radius:2rem;padding:.4rem 1rem;margin-bottom:1.5rem;cursor:pointer;transition:border-color .2s,color .2s}
+.jouer:hover{border-color:var(--yellow);color:var(--yellow)}
+.jouer[aria-pressed="true"]{background:var(--yellow);border-color:var(--yellow);color:var(--navy)}
+.regle{display:none;margin-top:1.25rem;max-width:33em}
+.regle b{font-family:var(--display);font-size:2.5rem;line-height:1;color:var(--yellow);font-variant-numeric:tabular-nums}
+.membres[data-mode="jeu"] .regle{display:block}
+.membres[data-mode="jeu"] .sans,.membres[data-mode="jeu"] .pola p{display:none}
+.membres[data-mode="jeu"] .pola{cursor:pointer}
+.membres[data-mode="jeu"] [aria-pressed="false"]::after{content:"?";display:block;color:var(--blue)}
+.membres[data-mode="jeu"] [aria-pressed="true"]{animation:flip .45s var(--ease)}
+.membres[data-mode="jeu"] [aria-pressed="true"] .nom{display:block}
+@keyframes flip{from{transform:perspective(40rem) rotateY(80deg)}}
+
 /* Les partenaires */
 .partners{list-style:none;padding:0;margin-top:2rem}
 .partners li{display:grid;grid-template-columns:22rem minmax(0,1fr);gap:1.25rem clamp(2rem,5vw,4rem);align-items:center;border-top:3px solid var(--blue);padding:1.75rem 0}
@@ -132,7 +165,7 @@ section{padding:clamp(3.5rem,8vw,6.5rem) var(--m)}
 footer{padding:1.25rem max(var(--m),calc(50% - 36rem)) 2.25rem;font-size:.9rem;display:flex;justify-content:space-between;flex-wrap:wrap;gap:.5rem 2rem;border-top:1px solid var(--line)}
 .w footer{border-top-color:var(--line-w)}
 
-@media (max-width:520px){.btn{font-size:1.6rem}}
+@media (max-width:520px){.btn{font-size:1.6rem}.polas{grid-template-columns:repeat(2,minmax(0,1fr));gap:2rem 1.25rem}}
 @media (max-width:820px){
   /* Le nom du club (padding .75rem + .wm 2.8rem) sort de l'écran, seule la ligne du menu reste. */
   .top{top:-3.55rem;padding-bottom:0}
@@ -166,7 +199,7 @@ footer{padding:1.25rem max(var(--m),calc(50% - 36rem)) 2.25rem;font-size:.9rem;d
 <a class="skip" href="#contenu">Aller au contenu</a>
 <header class="top">
   <a class="wm" href="#contenu" aria-label="Courir Fonsegrives, haut de page">Cour<i>i</i>r Fonsegr<i>i</i>ves</a>
-  <nav aria-label="Rubriques"><a href="#accueil">Accueil</a><a href="#presentation">Le club</a><a href="#lieux">Lieux</a><a href="#semaine">Semaine</a><a href="#balade">Balade</a><a href="#adhesion">Adhésion</a><a href="#bureau">Bureau</a><a href="#partenaires">Partenaires</a></nav>
+  <nav aria-label="Rubriques"><a href="#accueil">Accueil</a><a href="#presentation">Le club</a><a href="#lieux">Lieux</a><a href="#semaine">Semaine</a><a href="#balade">Balade</a><a href="#adhesion">Adhésion</a><a href="#bureau">Bureau</a><a href="#membres">Membres</a><a href="#partenaires">Partenaires</a></nav>
 </header>
 <main id="contenu" tabindex="-1">
 <div class="hero" id="accueil">
@@ -238,7 +271,7 @@ footer{padding:1.25rem max(var(--m),calc(50% - 36rem)) 2.25rem;font-size:.9rem;d
 <ol>
   <li>Le <a href="https://courir-fonsegrives.fr/images/Bulletin_dadh%C3%A9sion_2026-2027.pdf">bulletin d'adhésion 2026-2027</a> (PDF).</li>
   <li>Un chèque ou un virement bancaire du bon montant.</li>
-  <li>Une photo pour le <a href="photos/trombinoscope-2026-2027.jpg">trombinoscope</a>.</li>
+  <li>Une photo pour le <a href="#membres">trombinoscope</a>.</li>
   <li>Le tout à un membre du bureau, de préférence à Ludivine Querbes, 11 place de la Saune à Fonsegrives.</li>
 </ol>
 </div>
@@ -258,6 +291,106 @@ footer{padding:1.25rem max(var(--m),calc(50% - 36rem)) 2.25rem;font-size:.9rem;d
   <div class="txt"><p>Le club est aussi sur <a href="https://strava.app.link/qBerZEvmSVb">Strava</a>.</p>
 </div>
 </div></section>
+
+<section class="n membres" id="membres" data-mode="album"><div class="in">
+  <div class="tete"><h2>L'album 2026/2027</h2></div>
+  <div class="txt"><p>Les membres du club cette saison.</p>
+</div>
+  <div class="regle"><p>Devinez qui est qui, puis touchez une photo pour voir son nom.</p><p aria-live="polite"><b id="score"></b> noms révélés</p></div>
+  <ul class="polas" id="polas">
+    <li><div class="pola"><img src="photos/membres/melanie-adamus.jpg" alt="Mélanie Adamus" loading="lazy"><p aria-hidden="true">Mélanie A.</p><p class="nom">Mélanie Adamus</p></div></li>
+    <li class="sans"><div class="pola"><span class="ini" role="img" aria-label="Christophe Andrieu">CA</span><p aria-hidden="true">Christophe A.</p></div></li>
+    <li><div class="pola"><img src="photos/membres/pierre-andrieu.jpg" alt="Pierre Andrieu" loading="lazy"><p aria-hidden="true">Pierre A.</p><p class="nom">Pierre Andrieu</p></div></li>
+    <li class="sans"><div class="pola"><span class="ini" role="img" aria-label="Gauthier Antoniolli">GA</span><p aria-hidden="true">Gauthier A.</p></div></li>
+    <li><div class="pola"><img src="photos/membres/christel-audoire.jpg" alt="Christel Audoire" loading="lazy"><p aria-hidden="true">Christel A.</p><p class="nom">Christel Audoire</p></div></li>
+    <li><div class="pola"><img src="photos/membres/thomas-baldran.jpg" alt="Thomas Baldran" loading="lazy"><p aria-hidden="true">Thomas B.</p><p class="nom">Thomas Baldran</p></div></li>
+    <li><div class="pola"><img src="photos/membres/valerie-balducchi.jpg" alt="Valérie Balducchi" loading="lazy"><p aria-hidden="true">Valérie B.</p><p class="nom">Valérie Balducchi</p></div></li>
+    <li><div class="pola"><img src="photos/membres/francois-barrier.jpg" alt="François Barrier" loading="lazy"><p aria-hidden="true">François B.</p><p class="nom">François Barrier</p></div></li>
+    <li class="sans"><div class="pola"><span class="ini" role="img" aria-label="Mathias Basle">MB</span><p aria-hidden="true">Mathias B.</p></div></li>
+    <li><div class="pola"><img src="photos/membres/remi-bellouard.jpg" alt="Rémi Bellouard" loading="lazy"><p aria-hidden="true">Rémi B.</p><p class="nom">Rémi Bellouard</p></div></li>
+    <li><div class="pola"><img src="photos/membres/sonia-benchik.jpg" alt="Sonia Benchik" loading="lazy"><p aria-hidden="true">Sonia B.</p><p class="nom">Sonia Benchik</p></div></li>
+    <li><div class="pola"><img src="photos/membres/marie-borell.jpg" alt="Marie Borell" loading="lazy"><p aria-hidden="true">Marie B.</p><p class="nom">Marie Borell</p></div></li>
+    <li><div class="pola"><img src="photos/membres/cedric-calmettes.jpg" alt="Cédric Calmettes" loading="lazy"><p aria-hidden="true">Cédric C.</p><p class="nom">Cédric Calmettes</p></div></li>
+    <li class="sans"><div class="pola"><span class="ini" role="img" aria-label="Céline Calmettes">CC</span><p aria-hidden="true">Céline C.</p></div></li>
+    <li><div class="pola"><img src="photos/membres/claude-canavese.jpg" alt="Claude Canavese" loading="lazy"><p aria-hidden="true">Claude C.</p><p class="nom">Claude Canavese</p></div></li>
+    <li><div class="pola"><img src="photos/membres/julien-charpentier.jpg" alt="Julien Charpentier" loading="lazy"><p aria-hidden="true">Julien C.</p><p class="nom">Julien Charpentier</p></div></li>
+    <li><div class="pola"><img src="photos/membres/carole-chiappero.jpg" alt="Carole Chiappero" loading="lazy"><p aria-hidden="true">Carole C.</p><p class="nom">Carole Chiappero</p></div></li>
+    <li class="sans"><div class="pola"><span class="ini" role="img" aria-label="Thomas Combalbert">TC</span><p aria-hidden="true">Thomas C.</p></div></li>
+    <li><div class="pola"><img src="photos/membres/jean-francois-courselle.jpg" alt="Jean-François Courselle" loading="lazy"><p aria-hidden="true">Jean-François C.</p><p class="nom">Jean-François Courselle</p></div></li>
+    <li><div class="pola"><img src="photos/membres/lionel-cuvit.jpg" alt="Lionel Cuvit" loading="lazy"><p aria-hidden="true">Lionel C.</p><p class="nom">Lionel Cuvit</p></div></li>
+    <li><div class="pola"><img src="photos/membres/julien-dalbin.jpg" alt="Julien Dalbin" loading="lazy"><p aria-hidden="true">Julien D.</p><p class="nom">Julien Dalbin</p></div></li>
+    <li><div class="pola"><img src="photos/membres/fabien-dambrine.jpg" alt="Fabien Dambrine" loading="lazy"><p aria-hidden="true">Fabien D.</p><p class="nom">Fabien Dambrine</p></div></li>
+    <li><div class="pola"><img src="photos/membres/boris-de-martin.jpg" alt="Boris De Martin" loading="lazy"><p aria-hidden="true">Boris D.</p><p class="nom">Boris De Martin</p></div></li>
+    <li><div class="pola"><img src="photos/membres/audrey-demay.jpg" alt="Audrey Demay" loading="lazy"><p aria-hidden="true">Audrey D.</p><p class="nom">Audrey Demay</p></div></li>
+    <li><div class="pola"><img src="photos/membres/romain-diez.jpg" alt="Romain Diez" loading="lazy"><p aria-hidden="true">Romain D.</p><p class="nom">Romain Diez</p></div></li>
+    <li><div class="pola"><img src="photos/membres/sonia-djebablah.jpg" alt="Sonia Djebablah" loading="lazy"><p aria-hidden="true">Sonia D.</p><p class="nom">Sonia Djebablah</p></div></li>
+    <li><div class="pola"><img src="photos/membres/jean-michel-dorsz.jpg" alt="Jean-Michel Dorsz" loading="lazy"><p aria-hidden="true">Jean-Michel D.</p><p class="nom">Jean-Michel Dorsz</p></div></li>
+    <li><div class="pola"><img src="photos/membres/bastien-dupont.jpg" alt="Bastien Dupont" loading="lazy"><p aria-hidden="true">Bastien D.</p><p class="nom">Bastien Dupont</p></div></li>
+    <li><div class="pola"><img src="photos/membres/yann-dupont.jpg" alt="Yann Dupont" loading="lazy"><p aria-hidden="true">Yann D.</p><p class="nom">Yann Dupont</p></div></li>
+    <li class="sans"><div class="pola"><span class="ini" role="img" aria-label="Léa Durrieu">LD</span><p aria-hidden="true">Léa D.</p></div></li>
+    <li><div class="pola"><img src="photos/membres/helene-espeisse.jpg" alt="Hélène Espeisse" loading="lazy"><p aria-hidden="true">Hélène E.</p><p class="nom">Hélène Espeisse</p></div></li>
+    <li><div class="pola"><img src="photos/membres/nadine-falq.jpg" alt="Nadine Falq" loading="lazy"><p aria-hidden="true">Nadine F.</p><p class="nom">Nadine Falq</p></div></li>
+    <li><div class="pola"><img src="photos/membres/isabelle-fanchini.jpg" alt="Isabelle Fanchini" loading="lazy"><p aria-hidden="true">Isabelle F.</p><p class="nom">Isabelle Fanchini</p></div></li>
+    <li class="sans"><div class="pola"><span class="ini" role="img" aria-label="Clément Fontana">CF</span><p aria-hidden="true">Clément F.</p></div></li>
+    <li><div class="pola"><img src="photos/membres/evanie-fort.jpg" alt="Evanie Fort" loading="lazy"><p aria-hidden="true">Evanie F.</p><p class="nom">Evanie Fort</p></div></li>
+    <li><div class="pola"><img src="photos/membres/sacha-foucher.jpg" alt="Sacha Foucher" loading="lazy"><p aria-hidden="true">Sacha F.</p><p class="nom">Sacha Foucher</p></div></li>
+    <li><div class="pola"><img src="photos/membres/sebastien-foucher.jpg" alt="Sébastien Foucher" loading="lazy"><p aria-hidden="true">Sébastien F.</p><p class="nom">Sébastien Foucher</p></div></li>
+    <li><div class="pola"><img src="photos/membres/jackie-foures.jpg" alt="Jackie Foures" loading="lazy"><p aria-hidden="true">Jackie F.</p><p class="nom">Jackie Foures</p></div></li>
+    <li><div class="pola"><img src="photos/membres/arnaud-gantet.jpg" alt="Arnaud Gantet" loading="lazy"><p aria-hidden="true">Arnaud G.</p><p class="nom">Arnaud Gantet</p></div></li>
+    <li><div class="pola"><img src="photos/membres/isabelle-george.jpg" alt="Isabelle George" loading="lazy"><p aria-hidden="true">Isabelle G.</p><p class="nom">Isabelle George</p></div></li>
+    <li class="sans"><div class="pola"><span class="ini" role="img" aria-label="Sébastien George">SG</span><p aria-hidden="true">Sébastien G.</p></div></li>
+    <li class="sans"><div class="pola"><span class="ini" role="img" aria-label="Florent Jambou">FJ</span><p aria-hidden="true">Florent J.</p></div></li>
+    <li class="sans"><div class="pola"><span class="ini" role="img" aria-label="Laura Jean-Francois">LJ</span><p aria-hidden="true">Laura J.</p></div></li>
+    <li><div class="pola"><img src="photos/membres/oceane-jilcot.jpg" alt="Océane Jilcot" loading="lazy"><p aria-hidden="true">Océane J.</p><p class="nom">Océane Jilcot</p></div></li>
+    <li><div class="pola"><img src="photos/membres/tanguy-labbe.jpg" alt="Tanguy Labbe" loading="lazy"><p aria-hidden="true">Tanguy L.</p><p class="nom">Tanguy Labbe</p></div></li>
+    <li><div class="pola"><img src="photos/membres/nathalie-lanoiselee.jpg" alt="Nathalie Lanoiselee" loading="lazy"><p aria-hidden="true">Nathalie L.</p><p class="nom">Nathalie Lanoiselee</p></div></li>
+    <li><div class="pola"><img src="photos/membres/mathieu-latorre.jpg" alt="Mathieu Latorre" loading="lazy"><p aria-hidden="true">Mathieu L.</p><p class="nom">Mathieu Latorre</p></div></li>
+    <li><div class="pola"><img src="photos/membres/david-le-bouquin.jpg" alt="David Le Bouquin" loading="lazy"><p aria-hidden="true">David L.</p><p class="nom">David Le Bouquin</p></div></li>
+    <li><div class="pola"><img src="photos/membres/loic-le-ravallec.jpg" alt="Loïc Le Ravallec" loading="lazy"><p aria-hidden="true">Loïc L.</p><p class="nom">Loïc Le Ravallec</p></div></li>
+    <li><div class="pola"><img src="photos/membres/jacques-lebrere.jpg" alt="Jacques Lebrere" loading="lazy"><p aria-hidden="true">Jacques L.</p><p class="nom">Jacques Lebrere</p></div></li>
+    <li class="sans"><div class="pola"><span class="ini" role="img" aria-label="Laetitia Lespes">LL</span><p aria-hidden="true">Laetitia L.</p></div></li>
+    <li><div class="pola"><img src="photos/membres/stephane-liebart.jpg" alt="Stéphane Liebart" loading="lazy"><p aria-hidden="true">Stéphane L.</p><p class="nom">Stéphane Liebart</p></div></li>
+    <li><div class="pola"><img src="photos/membres/nadia-mabrouk.jpg" alt="Nadia Mabrouk" loading="lazy"><p aria-hidden="true">Nadia M.</p><p class="nom">Nadia Mabrouk</p></div></li>
+    <li><div class="pola"><img src="photos/membres/alain-marchan.jpg" alt="Alain Marchan" loading="lazy"><p aria-hidden="true">Alain M.</p><p class="nom">Alain Marchan</p></div></li>
+    <li><div class="pola"><img src="photos/membres/flora-nguyen.jpg" alt="Flora Nguyen" loading="lazy"><p aria-hidden="true">Flora N.</p><p class="nom">Flora Nguyen</p></div></li>
+    <li><div class="pola"><img src="photos/membres/florian-nicolas.jpg" alt="Florian Nicolas" loading="lazy"><p aria-hidden="true">Florian N.</p><p class="nom">Florian Nicolas</p></div></li>
+    <li class="sans"><div class="pola"><span class="ini" role="img" aria-label="Alban Nieto">AN</span><p aria-hidden="true">Alban N.</p></div></li>
+    <li><div class="pola"><img src="photos/membres/pauline-noel.jpg" alt="Pauline Noel" loading="lazy"><p aria-hidden="true">Pauline N.</p><p class="nom">Pauline Noel</p></div></li>
+    <li class="sans"><div class="pola"><span class="ini" role="img" aria-label="Hugo Noubel">HN</span><p aria-hidden="true">Hugo N.</p></div></li>
+    <li><div class="pola"><img src="photos/membres/bertrand-osca.jpg" alt="Bertrand Osca" loading="lazy"><p aria-hidden="true">Bertrand O.</p><p class="nom">Bertrand Osca</p></div></li>
+    <li><div class="pola"><img src="photos/membres/irene-oubrier.jpg" alt="Irène Oubrier" loading="lazy"><p aria-hidden="true">Irène O.</p><p class="nom">Irène Oubrier</p></div></li>
+    <li><div class="pola"><img src="photos/membres/jacques-oubrier.jpg" alt="Jacques Oubrier" loading="lazy"><p aria-hidden="true">Jacques O.</p><p class="nom">Jacques Oubrier</p></div></li>
+    <li><div class="pola"><img src="photos/membres/benjamin-palau.jpg" alt="Benjamin Palau" loading="lazy"><p aria-hidden="true">Benjamin P.</p><p class="nom">Benjamin Palau</p></div></li>
+    <li><div class="pola"><img src="photos/membres/julie-paris.jpg" alt="Julie Paris" loading="lazy"><p aria-hidden="true">Julie P.</p><p class="nom">Julie Paris</p></div></li>
+    <li><div class="pola"><img src="photos/membres/jean-luc-peyre.jpg" alt="Jean-Luc Peyre" loading="lazy"><p aria-hidden="true">Jean-Luc P.</p><p class="nom">Jean-Luc Peyre</p></div></li>
+    <li><div class="pola"><img src="photos/membres/david-phan.jpg" alt="David Phan" loading="lazy"><p aria-hidden="true">David P.</p><p class="nom">David Phan</p></div></li>
+    <li><div class="pola"><img src="photos/membres/joris-pianezze.jpg" alt="Joris Pianezze" loading="lazy"><p aria-hidden="true">Joris P.</p><p class="nom">Joris Pianezze</p></div></li>
+    <li class="sans"><div class="pola"><span class="ini" role="img" aria-label="Stéphane Piotelat">SP</span><p aria-hidden="true">Stéphane P.</p></div></li>
+    <li><div class="pola"><img src="photos/membres/xavier-pousthomis.jpg" alt="Xavier Pousthomis" loading="lazy"><p aria-hidden="true">Xavier P.</p><p class="nom">Xavier Pousthomis</p></div></li>
+    <li><div class="pola"><img src="photos/membres/ludivine-querbes.jpg" alt="Ludivine Querbes" loading="lazy"><p aria-hidden="true">Ludivine Q.</p><p class="nom">Ludivine Querbes</p></div></li>
+    <li><div class="pola"><img src="photos/membres/alexandre-remande.jpg" alt="Alexandre Remande" loading="lazy"><p aria-hidden="true">Alexandre R.</p><p class="nom">Alexandre Remande</p></div></li>
+    <li><div class="pola"><img src="photos/membres/claude-ricart.jpg" alt="Claude Ricart" loading="lazy"><p aria-hidden="true">Claude R.</p><p class="nom">Claude Ricart</p></div></li>
+    <li><div class="pola"><img src="photos/membres/francoise-ricart.jpg" alt="Françoise Ricart" loading="lazy"><p aria-hidden="true">Françoise R.</p><p class="nom">Françoise Ricart</p></div></li>
+    <li class="sans"><div class="pola"><span class="ini" role="img" aria-label="Cédric Robert">CR</span><p aria-hidden="true">Cédric R.</p></div></li>
+    <li class="sans"><div class="pola"><span class="ini" role="img" aria-label="Montserrat Roldan">MR</span><p aria-hidden="true">Montserrat R.</p></div></li>
+    <li class="sans"><div class="pola"><span class="ini" role="img" aria-label="Clément Rolland">CR</span><p aria-hidden="true">Clément R.</p></div></li>
+    <li><div class="pola"><img src="photos/membres/isabelle-rouaix.jpg" alt="Isabelle Rouaix" loading="lazy"><p aria-hidden="true">Isabelle R.</p><p class="nom">Isabelle Rouaix</p></div></li>
+    <li><div class="pola"><img src="photos/membres/cedric-salaber.jpg" alt="Cédric Salaber" loading="lazy"><p aria-hidden="true">Cédric S.</p><p class="nom">Cédric Salaber</p></div></li>
+    <li><div class="pola"><img src="photos/membres/pascale-sebille.jpg" alt="Pascale Sebille" loading="lazy"><p aria-hidden="true">Pascale S.</p><p class="nom">Pascale Sebille</p></div></li>
+    <li><div class="pola"><img src="photos/membres/sergio-soares.jpg" alt="Sergio Soares" loading="lazy"><p aria-hidden="true">Sergio S.</p><p class="nom">Sergio Soares</p></div></li>
+    <li><div class="pola"><img src="photos/membres/florence-sturmel.jpg" alt="Florence Sturmel" loading="lazy"><p aria-hidden="true">Florence S.</p><p class="nom">Florence Sturmel</p></div></li>
+    <li><div class="pola"><img src="photos/membres/philippe-sturmel.jpg" alt="Philippe Sturmel" loading="lazy"><p aria-hidden="true">Philippe S.</p><p class="nom">Philippe Sturmel</p></div></li>
+    <li><div class="pola"><img src="photos/membres/bruno-tapie.jpg" alt="Bruno Tapie" loading="lazy"><p aria-hidden="true">Bruno T.</p><p class="nom">Bruno Tapie</p></div></li>
+    <li><div class="pola"><img src="photos/membres/geraldine-tourrel.jpg" alt="Géraldine Tourrel" loading="lazy"><p aria-hidden="true">Géraldine T.</p><p class="nom">Géraldine Tourrel</p></div></li>
+    <li><div class="pola"><img src="photos/membres/nicolas-verseils.jpg" alt="Nicolas Verseils" loading="lazy"><p aria-hidden="true">Nicolas V.</p><p class="nom">Nicolas Verseils</p></div></li>
+    <li><div class="pola"><img src="photos/membres/helene-voirin.jpg" alt="Hélène Voirin" loading="lazy"><p aria-hidden="true">Hélène V.</p><p class="nom">Hélène Voirin</p></div></li>
+    <li><div class="pola"><img src="photos/membres/jelto-von-schuckmann.jpg" alt="Jelto Von Schuckmann" loading="lazy"><p aria-hidden="true">Jelto V.</p><p class="nom">Jelto Von Schuckmann</p></div></li>
+    <li class="sans"><div class="pola"><span class="ini" role="img" aria-label="Wannes Vossen">WV</span><p aria-hidden="true">Wannes V.</p></div></li>
+    <li><div class="pola"><img src="photos/membres/fanny-yessad.jpg" alt="Fanny Yessad" loading="lazy"><p aria-hidden="true">Fanny Y.</p><p class="nom">Fanny Yessad</p></div></li>
+    <li><div class="pola"><img src="photos/membres/christian-zamo.jpg" alt="Christian Zamo" loading="lazy"><p aria-hidden="true">Christian Z.</p><p class="nom">Christian Zamo</p></div></li>
+  </ul>
+</div></section>
+
 <section class="w partenaires" id="partenaires"><div class="in">
   <h2>Nos partenaires</h2>
   <div class="txt"><p>Ils soutiennent le club : merci à eux !</p>
@@ -303,6 +436,45 @@ new ResizeObserver(function(e){var t=e[0].target;document.documentElement.style.
     wall.appendChild(b);btns.push(b);
   });
   pick(0);
+})();
+(function(){
+  var sec=document.getElementById("membres"),ul=document.getElementById("polas"),score=document.getElementById("score");
+  var cache="Nom caché",lis=[].slice.call(ul.children),cartes=[].slice.call(ul.querySelectorAll("li:not(.sans) .pola"));
+  var bouton=document.createElement("button");bouton.type="button";bouton.className="jouer";bouton.textContent="Qui est-ce ?";
+  function compter(){score.textContent=ul.querySelectorAll('[aria-pressed="true"]').length+" / "+cartes.length;}
+  function melanger(t){
+    t=t.slice();
+    for(var i=t.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1)),x=t[i];t[i]=t[j];t[j]=x;}
+    return t;
+  }
+  function montrer(c,vu){
+    c.setAttribute("aria-pressed",vu?"true":"false");
+    c.setAttribute("aria-label",vu?c.querySelector(".nom").textContent:cache);
+  }
+  function mode(m){
+    var jeu=m==="jeu";
+    sec.setAttribute("data-mode",m);
+    bouton.setAttribute("aria-pressed",jeu?"true":"false");
+    (jeu?melanger(lis):lis).forEach(function(li){ul.appendChild(li);});
+    cartes.forEach(function(c){
+      c.querySelector("img").alt=jeu?"":c.querySelector(".nom").textContent;
+      if(jeu){c.setAttribute("role","button");c.tabIndex=0;montrer(c,false);}
+      else ["role","tabindex","aria-pressed","aria-label"].forEach(function(a){c.removeAttribute(a);});
+    });
+    compter();
+  }
+  function retourner(c){montrer(c,c.getAttribute("aria-pressed")!=="true");compter();}
+  function carte(e){return e.target.closest('[role="button"]');}
+  bouton.addEventListener("click",function(){mode(sec.getAttribute("data-mode")==="jeu"?"album":"jeu");});
+  ul.addEventListener("click",function(e){var c=carte(e);if(c)retourner(c);});
+  ul.addEventListener("keydown",function(e){
+    var c=carte(e);
+    if(!c||(e.key!=="Enter"&&e.key!==" "))return;
+    e.preventDefault();
+    if(!e.repeat)retourner(c);
+  });
+  sec.querySelector(".tete").appendChild(bouton);
+  mode("album");
 })();
 </script>
 </body>
