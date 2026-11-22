@@ -13,4 +13,4 @@ partenaires:
     texte: "Créatrice de costumes et de fursuits."
     site: https://www.crystalcyancreation.fr
 ---
-Merci à eux de soutenir le club.
+Ils soutiennent le club : merci à eux !
