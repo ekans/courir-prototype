@@ -133,8 +133,12 @@ section{padding:clamp(3.5rem,8vw,6.5rem) var(--m)}
 footer{padding:1.25rem max(var(--m),calc(50% - 36rem)) 2.25rem;font-size:.9rem;display:flex;justify-content:space-between;flex-wrap:wrap;gap:.5rem 2rem;border-top:1px solid var(--line)}
 .w footer{border-top-color:var(--line-w)}
 
-@media (max-width:520px){.btn{font-size:1.6rem}.top nav{gap:0 1rem;font-size:.9rem}}
+@media (max-width:520px){.btn{font-size:1.6rem}}
 @media (max-width:820px){
+  /* Le nom du club (padding .75rem + .wm 2.8rem) sort de l'écran, seule la ligne du menu reste. */
+  .top{top:-3.55rem;padding-bottom:0}
+  .top nav{width:calc(100% + .5rem);flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;padding-right:2rem;mask-image:linear-gradient(to right,#000 calc(100% - 2rem),transparent);font-size:.9rem}
+  .top nav a{white-space:nowrap}
   .panel,.times li,.balade .in,.join .g{grid-template-columns:minmax(0,1fr)}
   .panel li{grid-template-columns:4.4rem minmax(0,1fr)}
   .panel li a{grid-column:2}
@@ -237,7 +241,7 @@ footer{padding:1.25rem max(var(--m),calc(50% - 36rem)) 2.25rem;font-size:.9rem;d
 </main>
 <footer><span>© 2026 Courir Fonsegrives, section de l'USQF</span><span>Quint-Fonsegrives, Haute-Garonne</span></footer>
 <script>
-new ResizeObserver(function(e){document.documentElement.style.scrollPaddingTop=e[0].target.offsetHeight+"px";}).observe(document.querySelector(".top"));
+new ResizeObserver(function(e){var t=e[0].target;document.documentElement.style.scrollPaddingTop=t.offsetHeight+parseFloat(getComputedStyle(t).top)+"px";}).observe(document.querySelector(".top"));
 (function(){
   var R={{ lieux.parcours | jsonify }},ordre={{ lieux.lieux | jsonify }};
   R.forEach(function(r){r.passe_par.forEach(function(l){if(ordre.indexOf(l)<0)ordre.push(l);});});
