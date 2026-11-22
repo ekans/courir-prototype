@@ -173,7 +173,8 @@ section{padding:clamp(3.5rem,8vw,6.5rem) var(--m)}
 .partners p{max-width:33em}
 .partners .site{font-weight:600;display:inline-block;padding:.55rem 0;margin-top:-.3rem}
 .partners .reseaux{display:flex;flex-wrap:wrap;gap:0 1.25rem}
-.partners .reseaux a{display:inline-block;padding:.55rem 0}
+.partners .reseaux a{display:inline-flex;align-items:center;gap:.45rem;padding:.55rem 0}
+.partners .reseaux .icone{width:1.25rem;height:1.25rem;flex:none}
 
 footer{padding:1.25rem max(var(--m),calc(50% - 36rem)) 2.25rem;font-size:.9rem;display:flex;justify-content:space-between;flex-wrap:wrap;gap:.5rem 2rem;border-top:1px solid var(--line)}
 .w footer{border-top-color:var(--line-w)}
@@ -314,7 +315,7 @@ footer{padding:1.25rem max(var(--m),calc(50% - 36rem)) 2.25rem;font-size:.9rem;d
         <p>{{ p.texte }}</p>
         {%- if p.site %}<a class="site" href="{{ p.site }}">{{ p.site | remove: "https://" | remove: "http://" }}</a>{% endif %}
         {%- if p.reseaux %}
-        <p class="reseaux">{% for r in p.reseaux %}<a href="{{ r.lien }}">{{ r.nom }}</a>{% endfor %}</p>
+        <p class="reseaux">{% for r in p.reseaux %}<a href="{{ r.lien }}">{% include icone-reseau.html nom=r.nom %}{{ r.nom }}</a>{% endfor %}</p>
         {%- endif %}
       </div>
     </li>
