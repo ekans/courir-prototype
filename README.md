@@ -6,18 +6,17 @@ En ligne : https://ekans.github.io/courir-prototype/
 
 ## Modifier le contenu
 
-Le contenu se modifie avec [Sveltia CMS](https://sveltiacms.app), à l'adresse https://ekans.github.io/courir-prototype/admin/.
+Le texte de chaque rubrique est dans un fichier de `_data/`.
+Pour le modifier, ouvrir le fichier sur GitHub, cliquer sur le crayon, puis valider le commit sur `main`.
+Le site se met à jour environ une minute plus tard.
 
-Pour se connecter, il faut un compte GitHub avec le droit d'écriture sur ce dépôt.
-Sur l'écran d'accueil, choisir « Sign In Using Access Token » et suivre le lien qui crée le jeton sur GitHub.
-
-Chaque enregistrement fait un commit sur `main`, et le site se met à jour environ une minute plus tard.
+Si un texte contient « : » ou commence par un caractère spécial, le mettre entre guillemets droits (`"…"`).
+Sinon le fichier YAML est invalide et la publication échoue.
 
 ## Organisation
 
 - `index.html` : la mise en page. Le texte vient des fichiers de `_data/`.
 - `_data/` : un fichier YAML par rubrique de la page (accueil, présentation, lieux, parcours, semaine, Balade, adhésion, bureau).
-- `admin/` : Sveltia CMS. `config.yml` décrit les champs modifiables de chaque rubrique.
 - `photos/` : les images servies avec le site.
 - `documents/` : le bulletin d'adhésion.
 
