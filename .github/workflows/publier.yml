@@ -1,6 +1,3 @@
-# Builds the site from main and publishes it to the root of the gh-pages branch,
-# which GitHub Pages serves. PR previews live in gh-pages/pr-preview/ and are
-# managed by apercu-pr.yml; this workflow must never delete them.
 name: Publier le site
 
 on:
@@ -34,7 +31,5 @@ jobs:
           branch: gh-pages
           folder: _site
           clean: true
-          # Keep the live PR previews.
           clean-exclude: pr-preview/
-          # Retry with a rebase instead of overwriting a preview pushed meanwhile.
           force: false

@@ -1,6 +1,3 @@
-# Publishes each same-repo pull request to gh-pages/pr-preview/pr-<N>/,
-# posts the link as one PR comment kept up to date, and removes the preview
-# when the PR is closed or merged.
 name: Aperçu de la PR
 
 on:
@@ -31,10 +28,8 @@ jobs:
         if: github.event.action != 'closed'
         uses: actions/jekyll-build-pages@44a6e6beabd48582f863aeeb6cb2151cc1716697 # v1.0.13
 
-      # Same output as production. _site belongs to root (container build).
-      - if: github.event.action != 'closed'
-        run: sudo touch _site/.nojekyll
-
+      # The preview must not contain a .nojekyll: the deploy action never deletes
+      # one that the source folder lacks.
       - name: Publier l'aperçu
         if: github.event.action != 'closed'
         uses: JamesIves/github-pages-deploy-action@fa24774553152dd7873cd16ebd8d959b010c5445 # v4.9.0
@@ -45,7 +40,6 @@ jobs:
           force: false
           commit-message: "Aperçu de la PR #${{ github.event.number }}"
 
-      # Deploying an empty folder with clean enabled empties the target folder.
       - name: Préparer un dossier vide
         if: github.event.action == 'closed'
         run: mkdir -p "$RUNNER_TEMP/vide"
