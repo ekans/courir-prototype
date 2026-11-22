@@ -63,7 +63,7 @@ section{padding:clamp(3.5rem,8vw,6.5rem) var(--m)}
 .y h2,.y h3{color:var(--navy)}
 .y :focus-visible{outline-color:var(--navy)}
 
-.top{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:0 1.5rem;padding:.75rem max(var(--m),calc(50% - 36rem))}
+.top{position:sticky;top:0;z-index:5;background:var(--blue);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:0 1.5rem;padding:.75rem max(var(--m),calc(50% - 36rem))}
 .wm{font-family:var(--display);font-weight:700;font-size:2rem;line-height:1;text-transform:uppercase;letter-spacing:.04em;text-decoration:none;padding:.4rem 0}
 .wm i,h1 i,.wall i{font-style:normal;color:var(--yellow)}
 .top nav{display:flex;flex-wrap:wrap;gap:0 1rem;margin-inline:-.25rem;font-weight:600;font-size:.95rem}
@@ -133,8 +133,12 @@ section{padding:clamp(3.5rem,8vw,6.5rem) var(--m)}
 footer{padding:1.25rem max(var(--m),calc(50% - 36rem)) 2.25rem;font-size:.9rem;display:flex;justify-content:space-between;flex-wrap:wrap;gap:.5rem 2rem;border-top:1px solid var(--line)}
 .w footer{border-top-color:var(--line-w)}
 
-@media (max-width:520px){.btn{font-size:1.6rem}.top nav{width:calc(100% + .5rem);justify-content:space-between;gap:0;font-size:.9rem}}
+@media (max-width:520px){.btn{font-size:1.6rem}}
 @media (max-width:820px){
+  /* Le nom du club (padding .75rem + .wm 2.8rem) sort de l'écran, seule la ligne du menu reste. */
+  .top{top:-3.55rem;padding-bottom:0}
+  .top nav{width:calc(100% + .5rem);flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;padding-right:2rem;mask-image:linear-gradient(to right,#000 calc(100% - 2rem),transparent);font-size:.9rem}
+  .top nav a{white-space:nowrap}
   .panel,.times li,.balade .in,.join .g{grid-template-columns:minmax(0,1fr)}
   .panel li{grid-template-columns:4.4rem minmax(0,1fr)}
   .panel li a{grid-column:2}
@@ -161,10 +165,10 @@ footer{padding:1.25rem max(var(--m),calc(50% - 36rem)) 2.25rem;font-size:.9rem;d
 <a class="skip" href="#contenu">Aller au contenu</a>
 <header class="top">
   <a class="wm" href="#contenu" aria-label="Courir Fonsegrives, haut de page">Cour<i>i</i>r Fonsegr<i>i</i>ves</a>
-  <nav aria-label="Rubriques"><a href="#lieux">Lieux</a><a href="#semaine">Semaine</a><a href="#balade">Balade</a><a href="#adhesion">Adhésion</a><a href="#bureau">Bureau</a></nav>
+  <nav aria-label="Rubriques"><a href="#accueil">Accueil</a><a href="#presentation">Le club</a><a href="#lieux">Lieux</a><a href="#semaine">Semaine</a><a href="#balade">Balade</a><a href="#adhesion">Adhésion</a><a href="#bureau">Bureau</a></nav>
 </header>
 <main id="contenu" tabindex="-1">
-<div class="hero">
+<div class="hero" id="accueil">
   <img class="ph" src="{{ accueil.photo }}" width="1200" height="800" alt="{{ accueil.photo_description }}" fetchpriority="high">
   <div class="cap">
     <h1>{{ accueil.titre }}</h1>
@@ -173,7 +177,7 @@ footer{padding:1.25rem max(var(--m),calc(50% - 36rem)) 2.25rem;font-size:.9rem;d
   </div>
 </div>
 
-<section class="w about"><div class="in">
+<section class="w about" id="presentation"><div class="in">
   <h2>{{ presentation.titre }}</h2>
   <div class="txt">{{ presentation.content }}</div>
 </div></section>
@@ -237,6 +241,7 @@ footer{padding:1.25rem max(var(--m),calc(50% - 36rem)) 2.25rem;font-size:.9rem;d
 </main>
 <footer><span>© 2026 Courir Fonsegrives, section de l'USQF</span><span>Quint-Fonsegrives, Haute-Garonne</span></footer>
 <script>
+new ResizeObserver(function(e){var t=e[0].target;document.documentElement.style.scrollPaddingTop=t.offsetHeight+parseFloat(getComputedStyle(t).top)+"px";}).observe(document.querySelector(".top"));
 (function(){
   var R={{ lieux.parcours | jsonify }},ordre={{ lieux.lieux | jsonify }};
   R.forEach(function(r){r.passe_par.forEach(function(l){if(ordre.indexOf(l)<0)ordre.push(l);});});
