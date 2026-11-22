@@ -147,7 +147,21 @@ section{padding:clamp(3.5rem,8vw,6.5rem) var(--m)}
 .pola{background:#fff;color:var(--navy);padding:.55rem .55rem 0;box-shadow:0 .5rem 1.2rem rgba(0,0,0,.4)}
 .pola img,.ini{display:block;width:100%;height:auto;aspect-ratio:1;object-fit:cover;object-position:50% 30%;background:var(--soft)}
 .ini{display:grid;place-content:center;font-family:var(--display);font-weight:700;font-size:3.5rem;color:var(--blue)}
-.pola p{font-family:var(--display);font-weight:700;font-size:1.75rem;line-height:1;text-align:center;padding:.5rem 0 .6rem;overflow-wrap:anywhere}
+.pola p,.pola::after{font-family:var(--display);font-weight:700;font-size:1.75rem;line-height:1;text-align:center;padding:.5rem 0 .6rem;overflow-wrap:anywhere}
+.pola .nom{display:none}
+
+/* Le jeu « Qui est-ce ? » : tout découle de data-mode sur la section et d'aria-pressed sur chaque carte. */
+.membres .btn{margin-top:1.5rem}
+.membres .btn[aria-pressed="true"]{background:#fff}
+.regle{display:none;margin-top:1.25rem;max-width:33em}
+.regle b{font-family:var(--display);font-size:2.5rem;line-height:1;color:var(--yellow);font-variant-numeric:tabular-nums}
+.membres[data-mode="jeu"] .regle{display:block}
+.membres[data-mode="jeu"] .sans,.membres[data-mode="jeu"] .pola p{display:none}
+.membres[data-mode="jeu"] .pola{cursor:pointer}
+.membres[data-mode="jeu"] [aria-pressed="false"]::after{content:"?";display:block;color:var(--blue)}
+.membres[data-mode="jeu"] [aria-pressed="true"]{animation:flip .45s var(--ease)}
+.membres[data-mode="jeu"] [aria-pressed="true"] .nom{display:block}
+@keyframes flip{from{transform:perspective(40rem) rotateY(80deg)}}
 
 /* Les partenaires */
 .partners{list-style:none;padding:0;margin-top:2rem}
@@ -271,12 +285,14 @@ footer{padding:1.25rem max(var(--m),calc(50% - 36rem)) 2.25rem;font-size:.9rem;d
 <section class="n membres" id="membres" data-mode="album"><div class="in">
   <h2>{{ membres.titre }}</h2>
   <div class="txt">{{ membres.content }}</div>
+  <div class="regle"><p>{{ membres.jeu_consigne }}</p><p aria-live="polite"><b id="score"></b> {{ membres.jeu_compteur }}</p></div>
   <ul class="polas" id="polas">
     {%- for m in membres.membres %}
     <li{% unless m.photo %} class="sans"{% endunless %}><div class="pola">
       {%- if m.photo %}<img src="{{ m.photo }}" alt="{{ m.prenom }} {{ m.nom }}" loading="lazy">
       {%- else %}<span class="ini" role="img" aria-label="{{ m.prenom }} {{ m.nom }}">{{ m.prenom | slice: 0 }}{{ m.nom | slice: 0 }}</span>{% endif -%}
       <p aria-hidden="true">{{ m.prenom }} {{ m.nom | slice: 0 }}.</p>
+      {%- if m.photo %}<p class="nom">{{ m.prenom }} {{ m.nom }}</p>{% endif -%}
     </div></li>
     {%- endfor %}
   </ul>
@@ -322,6 +338,45 @@ new ResizeObserver(function(e){var t=e[0].target;document.documentElement.style.
     wall.appendChild(b);btns.push(b);
   });
   pick(0);
+})();
+(function(){
+  var sec=document.getElementById("membres"),ul=document.getElementById("polas"),score=document.getElementById("score"),regle=sec.querySelector(".regle");
+  var cache={{ membres.jeu_cache | jsonify }},lis=[].slice.call(ul.children),cartes=[].slice.call(ul.querySelectorAll("li:not(.sans) .pola"));
+  var bouton=document.createElement("button");bouton.type="button";bouton.className="btn";bouton.textContent={{ membres.jeu | jsonify }};
+  function compter(){score.textContent=ul.querySelectorAll('[aria-pressed="true"]').length+" / "+cartes.length;}
+  function melanger(t){
+    t=t.slice();
+    for(var i=t.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1)),x=t[i];t[i]=t[j];t[j]=x;}
+    return t;
+  }
+  function montrer(c,vu){
+    c.setAttribute("aria-pressed",vu?"true":"false");
+    c.setAttribute("aria-label",vu?c.querySelector(".nom").textContent:cache);
+  }
+  function mode(m){
+    var jeu=m==="jeu";
+    sec.setAttribute("data-mode",m);
+    bouton.setAttribute("aria-pressed",jeu?"true":"false");
+    (jeu?melanger(lis):lis).forEach(function(li){ul.appendChild(li);});
+    cartes.forEach(function(c){
+      c.querySelector("img").alt=jeu?"":c.querySelector(".nom").textContent;
+      if(jeu){c.setAttribute("role","button");c.tabIndex=0;montrer(c,false);}
+      else ["role","tabindex","aria-pressed","aria-label"].forEach(function(a){c.removeAttribute(a);});
+    });
+    compter();
+  }
+  function retourner(c){montrer(c,c.getAttribute("aria-pressed")!=="true");compter();}
+  function carte(e){return e.target.closest('[role="button"]');}
+  bouton.addEventListener("click",function(){mode(sec.getAttribute("data-mode")==="jeu"?"album":"jeu");});
+  ul.addEventListener("click",function(e){var c=carte(e);if(c)retourner(c);});
+  ul.addEventListener("keydown",function(e){
+    var c=carte(e);
+    if(!c||(e.key!=="Enter"&&e.key!==" "))return;
+    e.preventDefault();
+    if(!e.repeat)retourner(c);
+  });
+  regle.parentNode.insertBefore(bouton,regle);
+  mode("album");
 })();
 </script>
 </body>
