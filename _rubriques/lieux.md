@@ -78,4 +78,4 @@ parcours:
     openrunner: 3095112
     passe_par: [La Saune, Lauzerville, Saint-Orens, Auzielle, Catala]
 ---
-Nos quatorze parcours passent par ces lieux. Choisissez-en un pour voir les parcours qui le traversent. Tous partent de la salle Patrick Pépi.
+Nos quatorze parcours passent par ces lieux. Choisissez-en un pour voir les parcours qui le traversent. Tous partent de la salle Patrick Pépi, et tous ont été courus et approuvés par des membres du club. Pour en proposer un autre, contactez un membre du bureau.

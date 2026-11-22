@@ -12,5 +12,14 @@ partenaires:
     logo_hauteur: 502
     texte: "Créatrice de costumes et de fursuits."
     site: https://www.crystalcyancreation.fr
+    reseaux:
+      - nom: Instagram
+        lien: https://www.instagram.com/crystal_cyan_creation/
+      - nom: Twitter
+        lien: https://x.com/CrystalCyanCrea
+      - nom: Facebook
+        lien: https://www.facebook.com/Crystal.Cyan.Creation
+      - nom: Telegram
+        lien: https://t.me/Crystal_Cyan_Creation
 ---
 Ils soutiennent le club : merci à eux !
