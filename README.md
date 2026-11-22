@@ -17,6 +17,7 @@ Chaque rubrique du site a son fichier dans [`_rubriques/`](_rubriques) :
 | `balade.md` | La Balade de la Saune |
 | `adhesion.md` | Les tarifs et comment adhérer |
 | `bureau.md` | Les membres du bureau, leurs photos, l'adresse mail du club |
+| `partenaires.md` | Les partenaires du club, leur logo et leur site |
 
 Pour modifier un texte sur GitHub :
 
@@ -31,6 +32,8 @@ Un fichier a deux parties :
 - **En bas, après le second `---`** : les paragraphes, en Markdown. Laissez une ligne vide entre deux paragraphes. Un lien s'écrit `[texte du lien](https://adresse)`.
 
 Changer la photo d'un membre du bureau : déposer la photo dans `photos/bureau/` (bouton « Add file », puis « Upload files »), puis mettre son chemin après `photo:` dans `bureau.md`. Sans ligne `photo:`, le membre s'affiche sans photo.
+
+Ajouter un partenaire : copier un bloc qui commence par `- nom:` dans `partenaires.md` et changer ses valeurs. `logo_largeur` et `logo_hauteur` sont la taille de l'image en pixels. Sans ligne `site:`, le partenaire s'affiche sans lien.
 
 Ajouter un parcours : copier un bloc qui commence par `- km:` dans `lieux.md` et changer ses valeurs. Le nombre après `openrunner:` est le numéro du parcours sur OpenRunner. Un lieu cité dans `passe_par` mais absent de la liste `lieux` s'ajoute tout seul à la fin.
 
