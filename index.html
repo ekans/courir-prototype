@@ -151,8 +151,10 @@ section{padding:clamp(3.5rem,8vw,6.5rem) var(--m)}
 .pola .nom{display:none}
 
 /* Le jeu « Qui est-ce ? » : tout découle de data-mode sur la section et d'aria-pressed sur chaque carte. */
-.membres .btn{margin-top:1.5rem}
-.membres .btn[aria-pressed="true"]{background:#fff}
+.tete{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:0 1.5rem}
+.jouer{font:600 .95rem/1.2 var(--body);color:#fff;background:transparent;border:2px solid var(--line);border-radius:2rem;padding:.4rem 1rem;margin-bottom:1.5rem;cursor:pointer;transition:border-color .2s,color .2s}
+.jouer:hover{border-color:var(--yellow);color:var(--yellow)}
+.jouer[aria-pressed="true"]{background:var(--yellow);border-color:var(--yellow);color:var(--navy)}
 .regle{display:none;margin-top:1.25rem;max-width:33em}
 .regle b{font-family:var(--display);font-size:2.5rem;line-height:1;color:var(--yellow);font-variant-numeric:tabular-nums}
 .membres[data-mode="jeu"] .regle{display:block}
@@ -283,7 +285,7 @@ footer{padding:1.25rem max(var(--m),calc(50% - 36rem)) 2.25rem;font-size:.9rem;d
 </div></section>
 
 <section class="n membres" id="membres" data-mode="album"><div class="in">
-  <h2>{{ membres.titre }}</h2>
+  <div class="tete"><h2>{{ membres.titre }}</h2></div>
   <div class="txt">{{ membres.content }}</div>
   <div class="regle"><p>{{ membres.jeu_consigne }}</p><p aria-live="polite"><b id="score"></b> {{ membres.jeu_compteur }}</p></div>
   <ul class="polas" id="polas">
@@ -340,9 +342,9 @@ new ResizeObserver(function(e){var t=e[0].target;document.documentElement.style.
   pick(0);
 })();
 (function(){
-  var sec=document.getElementById("membres"),ul=document.getElementById("polas"),score=document.getElementById("score"),regle=sec.querySelector(".regle");
+  var sec=document.getElementById("membres"),ul=document.getElementById("polas"),score=document.getElementById("score");
   var cache={{ membres.jeu_cache | jsonify }},lis=[].slice.call(ul.children),cartes=[].slice.call(ul.querySelectorAll("li:not(.sans) .pola"));
-  var bouton=document.createElement("button");bouton.type="button";bouton.className="btn";bouton.textContent={{ membres.jeu | jsonify }};
+  var bouton=document.createElement("button");bouton.type="button";bouton.className="jouer";bouton.textContent={{ membres.jeu | jsonify }};
   function compter(){score.textContent=ul.querySelectorAll('[aria-pressed="true"]').length+" / "+cartes.length;}
   function melanger(t){
     t=t.slice();
@@ -375,7 +377,7 @@ new ResizeObserver(function(e){var t=e[0].target;document.documentElement.style.
     e.preventDefault();
     if(!e.repeat)retourner(c);
   });
-  regle.parentNode.insertBefore(bouton,regle);
+  sec.querySelector(".tete").appendChild(bouton);
   mode("album");
 })();
 </script>
