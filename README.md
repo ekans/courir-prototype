@@ -40,6 +40,7 @@ Si le haut d'un fichier contient une erreur, le site n'est pas mis à jour et la
 
 - `index.html` : la mise en page, les couleurs et le code de la page. Il assemble les rubriques, dans l'ordre de la page.
 - `_config.yml` : les réglages de Jekyll, qui fabrique le site.
+- `.github/workflows/` : les deux publications automatiques, celle du site et celle des aperçus de PR.
 - `photos/` : les photos servies avec le site : le trombinoscope, et dans `photos/bureau/` celles des membres du bureau.
 - Les autres images et le PDF sont chargés depuis [courir-fonsegrives.fr](https://courir-fonsegrives.fr).
 
@@ -58,5 +59,8 @@ Puis ouvrir http://localhost:4000.
 
 ## Publier
 
-GitHub Pages sert la racine de `main` et la passe par Jekyll.
-Chaque push sur `main` relance la publication (environ une minute).
+Chaque push sur `main` fabrique le site avec Jekyll et le publie dans la branche `gh-pages`, que GitHub Pages sert (environ une minute). Ne modifiez pas `gh-pages` à la main.
+
+Une pull request (PR) reçoit un aperçu du site avec ses changements : un commentaire sur la PR donne le lien. L'aperçu se met à jour à chaque push sur la PR, et disparaît quand la PR est fermée ou fusionnée.
+
+Une croix rouge à côté d'un commit ou d'une PR veut dire que la fabrication a échoué : le site, ou l'aperçu, n'a pas été mis à jour et la version précédente reste en ligne.

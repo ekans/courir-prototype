@@ -1,0 +1,40 @@
+# Builds the site from main and publishes it to the root of the gh-pages branch,
+# which GitHub Pages serves. PR previews live in gh-pages/pr-preview/ and are
+# managed by apercu-pr.yml; this workflow must never delete them.
+name: Publier le site
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: publier-production
+  cancel-in-progress: false
+
+jobs:
+  publier:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Construire le site avec Jekyll
+        uses: actions/jekyll-build-pages@44a6e6beabd48582f863aeeb6cb2151cc1716697 # v1.0.13
+
+      # The site is already built: stop GitHub Pages from running Jekyll again.
+      # _site belongs to root because the build runs in a container.
+      - run: sudo touch _site/.nojekyll
+
+      - name: Publier dans gh-pages
+        uses: JamesIves/github-pages-deploy-action@fa24774553152dd7873cd16ebd8d959b010c5445 # v4.9.0
+        with:
+          branch: gh-pages
+          folder: _site
+          clean: true
+          # Keep the live PR previews.
+          clean-exclude: pr-preview/
+          # Retry with a rebase instead of overwriting a preview pushed meanwhile.
+          force: false
