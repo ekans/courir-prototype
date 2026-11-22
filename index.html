@@ -63,7 +63,7 @@ section{padding:clamp(3.5rem,8vw,6.5rem) var(--m)}
 .y h2,.y h3{color:var(--navy)}
 .y :focus-visible{outline-color:var(--navy)}
 
-.top{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:0 1.5rem;padding:.75rem max(var(--m),calc(50% - 36rem))}
+.top{position:sticky;top:0;z-index:5;background:var(--blue);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:0 1.5rem;padding:.75rem max(var(--m),calc(50% - 36rem))}
 .wm{font-family:var(--display);font-weight:700;font-size:2rem;line-height:1;text-transform:uppercase;letter-spacing:.04em;text-decoration:none;padding:.4rem 0}
 .wm i,h1 i,.wall i{font-style:normal;color:var(--yellow)}
 .top nav{display:flex;flex-wrap:wrap;gap:0 1rem;margin-inline:-.25rem;font-weight:600;font-size:.95rem}
@@ -237,6 +237,7 @@ footer{padding:1.25rem max(var(--m),calc(50% - 36rem)) 2.25rem;font-size:.9rem;d
 </main>
 <footer><span>© 2026 Courir Fonsegrives, section de l'USQF</span><span>Quint-Fonsegrives, Haute-Garonne</span></footer>
 <script>
+new ResizeObserver(function(e){document.documentElement.style.scrollPaddingTop=e[0].target.offsetHeight+"px";}).observe(document.querySelector(".top"));
 (function(){
   var R={{ lieux.parcours | jsonify }},ordre={{ lieux.lieux | jsonify }};
   R.forEach(function(r){r.passe_par.forEach(function(l){if(ordre.indexOf(l)<0)ordre.push(l);});});
