@@ -124,6 +124,7 @@ section{padding:clamp(3.5rem,8vw,6.5rem) var(--m)}
 .people{list-style:none;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(11.5rem,1fr));gap:1.75rem 2rem}
 .people li{border-top:3px solid currentColor;padding-top:.6rem}
 .people b{display:block;font-family:var(--display);font-weight:700;font-size:2.1rem;line-height:.95;text-transform:uppercase;letter-spacing:.03em}
+.people img{display:block;width:6.5rem;height:8.5rem;object-fit:cover;border-radius:.25rem;margin-bottom:.8rem;background:var(--blue-deep)}
 .people span{display:block}
 .people a{display:inline-block;font-variant-numeric:tabular-nums;padding:.55rem 0;margin:-.3rem 0 -.55rem}
 .mail{display:inline-block;margin:3rem 0 1rem;font-family:var(--display);font-weight:700;font-size:clamp(2.1rem,6vw,4.75rem);line-height:1;letter-spacing:.03em;color:var(--yellow);overflow-wrap:anywhere}
@@ -226,7 +227,7 @@ footer{padding:1.25rem max(var(--m),calc(50% - 36rem)) 2.25rem;font-size:.9rem;d
   <h2>{{ bureau.titre }}</h2>
   <ul class="people">
     {%- for membre in bureau.membres %}
-    <li><b>{{ membre.nom }}</b><span>{{ membre.role }}</span>
+    <li>{%- if membre.photo %}<img src="{{ membre.photo }}" alt="{{ membre.nom }}" width="104" height="136" loading="lazy">{% endif %}<b>{{ membre.nom }}</b><span>{{ membre.role }}</span>
       {%- if membre.telephone %}<a href="tel:{{ membre.telephone | remove: " " | remove_first: "0" | prepend: "+33" }}">{{ membre.telephone }}</a>{% endif %}</li>
     {%- endfor %}
   </ul>
