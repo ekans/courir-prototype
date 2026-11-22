@@ -1,7 +1,7 @@
 ---
 titre: "L'album 2026/2027"
 jeu: "Qui est-ce ?"
-jeu_consigne: "Devinez qui est qui, puis touchez une photo pour voir le prénom."
+jeu_consigne: "Devinez qui est qui, puis touchez une photo pour voir son nom."
 jeu_compteur: "noms révélés"
 jeu_cache: "Nom caché"
 membres:
