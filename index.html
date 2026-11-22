@@ -7,6 +7,7 @@
 {%- assign balade = site.rubriques | where: "slug", "balade" | first -%}
 {%- assign adhesion = site.rubriques | where: "slug", "adhesion" | first -%}
 {%- assign bureau = site.rubriques | where: "slug", "bureau" | first -%}
+{%- assign partenaires = site.rubriques | where: "slug", "partenaires" | first -%}
 <!doctype html>
 <html lang="fr">
 <head>
@@ -130,6 +131,15 @@ section{padding:clamp(3.5rem,8vw,6.5rem) var(--m)}
 .mail{display:inline-block;margin:3rem 0 1rem;font-family:var(--display);font-weight:700;font-size:clamp(2.1rem,6vw,4.75rem);line-height:1;letter-spacing:.03em;color:var(--yellow);overflow-wrap:anywhere}
 .w .mail{color:var(--blue)}
 
+/* Les partenaires */
+.partners{list-style:none;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,17rem),1fr));gap:2rem;margin-top:1rem}
+.partners li{border-top:3px solid var(--blue);padding-top:1.25rem}
+.partners .logo{display:flex;align-items:flex-end;height:9rem;margin-bottom:1rem}
+.partners img{display:block;max-width:100%;max-height:9rem;width:auto;height:auto}
+.partners h3{margin-bottom:.4rem}
+.partners .site{font-weight:600;display:inline-block;padding:.55rem 0;margin-top:-.3rem}
+.partners+.txt{margin-top:2.5rem}
+
 footer{padding:1.25rem max(var(--m),calc(50% - 36rem)) 2.25rem;font-size:.9rem;display:flex;justify-content:space-between;flex-wrap:wrap;gap:.5rem 2rem;border-top:1px solid var(--line)}
 .w footer{border-top-color:var(--line-w)}
 
@@ -165,7 +175,7 @@ footer{padding:1.25rem max(var(--m),calc(50% - 36rem)) 2.25rem;font-size:.9rem;d
 <a class="skip" href="#contenu">Aller au contenu</a>
 <header class="top">
   <a class="wm" href="#contenu" aria-label="Courir Fonsegrives, haut de page">Cour<i>i</i>r Fonsegr<i>i</i>ves</a>
-  <nav aria-label="Rubriques"><a href="#accueil">Accueil</a><a href="#presentation">Le club</a><a href="#lieux">Lieux</a><a href="#semaine">Semaine</a><a href="#balade">Balade</a><a href="#adhesion">Adhésion</a><a href="#bureau">Bureau</a></nav>
+  <nav aria-label="Rubriques"><a href="#accueil">Accueil</a><a href="#presentation">Le club</a><a href="#lieux">Lieux</a><a href="#semaine">Semaine</a><a href="#balade">Balade</a><a href="#adhesion">Adhésion</a><a href="#bureau">Bureau</a><a href="#partenaires">Partenaires</a></nav>
 </header>
 <main id="contenu" tabindex="-1">
 <div class="hero" id="accueil">
@@ -237,6 +247,20 @@ footer{padding:1.25rem max(var(--m),calc(50% - 36rem)) 2.25rem;font-size:.9rem;d
   </ul>
   <a class="mail" href="mailto:{{ bureau.email }}">{{ bureau.email }}</a>
   <div class="txt">{{ bureau.content }}</div>
+</div></section>
+<section class="w partenaires" id="partenaires"><div class="in">
+  <h2>{{ partenaires.titre }}</h2>
+  <ul class="partners">
+    {%- for p in partenaires.partenaires %}
+    <li>
+      <div class="logo">{% if p.site %}<a href="{{ p.site }}">{% endif %}<img src="{{ p.logo }}" alt="{{ p.nom }}" width="{{ p.logo_largeur }}" height="{{ p.logo_hauteur }}" loading="lazy">{% if p.site %}</a>{% endif %}</div>
+      <h3>{{ p.nom }}</h3>
+      <p>{{ p.texte }}</p>
+      {%- if p.site %}<a class="site" href="{{ p.site }}">{{ p.site | remove: "https://" | remove: "http://" }}</a>{% endif %}
+    </li>
+    {%- endfor %}
+  </ul>
+  <div class="txt">{{ partenaires.content }}</div>
 </div></section>
 </main>
 <footer><span>© 2026 Courir Fonsegrives, section de l'USQF</span><span>Quint-Fonsegrives, Haute-Garonne</span></footer>

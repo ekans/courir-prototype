@@ -19,4 +19,4 @@ membres:
     photo: "photos/bureau/fanny-yessad.png"
     role: "Secrétaire"
 ---
-Le club est aussi sur [Strava](https://strava.app.link/qBerZEvmSVb). Le magasin R Running, partenaire du club, propose à nos adhérents des remises permanentes (hors soldes) sur les chaussures et le grand textile.
+Le club est aussi sur [Strava](https://strava.app.link/qBerZEvmSVb).
